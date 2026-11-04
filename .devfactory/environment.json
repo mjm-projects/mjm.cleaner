@@ -1,5 +1,5 @@
 {
-  "machine": { "os": "macos", "image": "ghcr.io/cirruslabs/macos-sequoia-xcode:16" },
-  "setup": "swift package resolve",
-  "test": "swift build"
+  "machine": { "os": "macos", "image": "ghcr.io/cirruslabs/macos-tahoe-xcode:26" },
+  "setup": "cd MjmCleanerKit && swift package resolve",
+  "test": "cd MjmCleanerKit && swift test"
 }
