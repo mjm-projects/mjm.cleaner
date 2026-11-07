@@ -11,6 +11,7 @@ public final class DoneStepModel {
     public let summaryText: String
     public let errorsText: String
     public let rows: [String]
+    public let hasDeletions: Bool
     public private(set) var historyWarning = ""
 
     /// Il salvataggio parte alla creazione, come nel costruttore C#; i test lo attendono.
@@ -23,6 +24,7 @@ public final class DoneStepModel {
         journal: PendingJournal?
     ) {
         self.navigation = navigation
+        hasDeletions = report.itemsDeleted > 0
 
         freedText = String(localized: "\(Formatting.bytes(report.bytesFreed)) liberati", bundle: .module)
         let deletedNoun = Formatting.plural(

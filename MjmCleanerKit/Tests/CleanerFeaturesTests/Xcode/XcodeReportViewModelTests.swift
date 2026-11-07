@@ -174,6 +174,26 @@ struct XcodeReportViewModelTests {
         #expect(FileManager.default.fileExists(atPath: journal.path))
     }
 
+    // Il blocco di supporto segue gli esiti `.deleted`, non `historyReport.itemsDeleted`: i due
+    // conteggi possono divergere e la vista deve mostrare ciò che è stato davvero eliminato.
+    @Test func hasDeletionsFollowsDeletedOutcomesNotHistoryReport() async {
+        func item(_ outcome: XcodeItemOutcome, _ key: String) -> XcodeItemResult {
+            XcodeItemResult(candidate: Fixture.candidate(key, .device), outcome: outcome, reason: "", verifiedEstimatedBytes: nil)
+        }
+        let oneDeletedZeroHistory = Self.create(XcodeCleanResult(
+            historyReport: makeReport(itemsDeleted: 0), items: [item(.deleted, "d")],
+            freeBytesBefore: nil, freeBytesAfter: nil, warnings: ["w"]))
+        let historyButNoDeleted = Self.create(XcodeCleanResult(
+            historyReport: makeReport(itemsDeleted: 5),
+            items: [item(.skipped, "s"), item(.failed, "f"), item(.uncertain, "u")],
+            freeBytesBefore: nil, freeBytesAfter: nil, warnings: []))
+        await oneDeletedZeroHistory.persistence?.value
+        await historyButNoDeleted.persistence?.value
+
+        #expect(oneDeletedZeroHistory.hasDeletions)
+        #expect(!historyButNoDeleted.hasDeletions)
+    }
+
     @Test func summaryCountsEachOutcomeSeparately() {
         func items(_ count: Int, _ outcome: XcodeItemOutcome) -> [XcodeItemResult] {
             (0..<count).map { XcodeItemResult(candidate: Fixture.candidate("\(outcome)-\($0)", .device), outcome: outcome, reason: "", verifiedEstimatedBytes: nil) }

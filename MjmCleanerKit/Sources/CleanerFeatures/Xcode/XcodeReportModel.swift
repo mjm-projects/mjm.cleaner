@@ -92,6 +92,9 @@ public final class XcodeReportModel {
     public var hasWarnings: Bool { !warningsText.isEmpty }
     public var hasHistoryWarning: Bool { !historyWarning.isEmpty }
 
+    /// Il blocco di supporto segue gli esiti effettivi, non `historyReport.itemsDeleted` né le stime.
+    public var hasDeletions: Bool { result.items.contains { $0.outcome == .deleted } }
+
     public func persist() async {
         await persistence?.value
     }

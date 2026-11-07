@@ -248,6 +248,10 @@ instead.
 Because the bundle is ad hoc signed, **Full Disk Access must be granted again
 after every update** (see Warnings). Debug builds never check for updates.
 
+## Support
+
+mjm.cleaner is free. If it saved you some space and you want to say thanks, you can buy me a coffee at [buymeacoffee.com/bugbrew](https://buymeacoffee.com/bugbrew).
+
 ## Documentation
 
 - Swift port specification: `docs/superpowers/specs/2026-10-13-swift-native-port-design.md`

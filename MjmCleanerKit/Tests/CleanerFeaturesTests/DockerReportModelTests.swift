@@ -97,6 +97,23 @@ struct DockerReportModelTests {
         #expect(model.historyWarning == "Pulizia completata, storico non aggiornato: database bloccato")
     }
 
+    // Il blocco di supporto segue `report.itemsDeleted`, non `deletedPaths` né i byte recuperati.
+    @Test func hasDeletionsFollowsItemsDeletedNotBytesFreed() throws {
+        let deleted = DockerReportModel(
+            environment: try makeEnvironment(), navigation: nil,
+            result: DockerCleanResult(report: makeReport(bytesFreed: 0, itemsDeleted: 1), before: .empty, after: .empty, daemonLost: false),
+            engine: dockerDesktop, diskBefore: nil, diskAfter: nil)
+        let none = DockerReportModel(
+            environment: try makeEnvironment(), navigation: nil,
+            result: DockerCleanResult(
+                report: makeReport(bytesFreed: 2048, itemsDeleted: 0, deletedPaths: ["docker:build-cache"]),
+                before: .empty, after: .empty, daemonLost: true),
+            engine: dockerDesktop, diskBefore: nil, diskAfter: nil)
+
+        #expect(deleted.hasDeletions)
+        #expect(!none.hasDeletions)
+    }
+
     @Test func analyzeAgainAndCloseNavigate() throws {
         let navigation = DockerNavigationSpy()
         let model = DockerReportModel(

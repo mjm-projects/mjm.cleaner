@@ -32,6 +32,9 @@ struct DoneStepView: View {
                     .frame(maxWidth: 600, alignment: .leading)
                     .card(padding: 14)
                 }
+                if model.hasDeletions {
+                    SupportBlock()
+                }
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 32)

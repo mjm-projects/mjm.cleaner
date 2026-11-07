@@ -8,34 +8,39 @@ struct XcodeReportView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 0) {
-                ForEach(model.items) { row in
-                    if row.id > 0 {
-                        Divider().padding(.leading, 16)
-                    }
-                    VStack(alignment: .leading, spacing: 2) {
-                        HStack {
-                            Text(row.name)
-                                .fontWeight(.semibold)
-                            Spacer()
-                            Text(row.outcomeText)
-                                .foregroundStyle(.secondary)
-                            Text(row.sizeText)
-                                .fontWeight(.semibold)
-                                .monospacedDigit()
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(spacing: 0) {
+                    ForEach(model.items) { row in
+                        if row.id > 0 {
+                            Divider().padding(.leading, 16)
                         }
-                        Text(row.identity)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Text(row.detail)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        VStack(alignment: .leading, spacing: 2) {
+                            HStack {
+                                Text(row.name)
+                                    .fontWeight(.semibold)
+                                Spacer()
+                                Text(row.outcomeText)
+                                    .foregroundStyle(.secondary)
+                                Text(row.sizeText)
+                                    .fontWeight(.semibold)
+                                    .monospacedDigit()
+                            }
+                            Text(row.identity)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Text(row.detail)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
+                }
+                .card(padding: 0)
+                if model.hasDeletions {
+                    SupportBlock()
                 }
             }
-            .card(padding: 0)
             .padding(.horizontal, 32)
             .padding(.vertical, 24)
         }
