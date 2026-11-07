@@ -54,6 +54,9 @@ struct DockerReportView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .card(padding: 12)
                 }
+                if model.hasDeletions {
+                    SupportBlock()
+                }
             }
             .padding(.horizontal, 32)
             .padding(.vertical, 24)

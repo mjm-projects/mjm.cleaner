@@ -93,6 +93,20 @@ struct DoneStepModelTests {
         #expect(model.historyWarning == "Pulizia completata, storico non aggiornato: disco pieno")
     }
 
+    // Il blocco di supporto segue gli elementi eliminati, non i byte liberati: una pulizia può
+    // eliminare elementi senza liberare spazio (per esempio file già vuoti).
+    @Test func hasDeletionsFollowsItemsDeletedNotBytesFreed() throws {
+        let deleted = DoneStepModel(
+            environment: try makeEnvironment(), navigation: nil,
+            report: makeReport(bytesFreed: 0, itemsDeleted: 1, itemsFailed: 2), journal: nil)
+        let none = DoneStepModel(
+            environment: try makeEnvironment(), navigation: nil,
+            report: makeReport(bytesFreed: 2048, itemsDeleted: 0), journal: nil)
+
+        #expect(deleted.hasDeletions)
+        #expect(!none.hasDeletions)
+    }
+
     @Test func newCleanupStartsOver() throws {
         let navigation = CleanupNavigationSpy()
         let model = DoneStepModel(environment: try makeEnvironment(), navigation: navigation, report: makeReport(), journal: nil)

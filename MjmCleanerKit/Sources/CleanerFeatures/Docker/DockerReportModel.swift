@@ -16,6 +16,7 @@ public final class DockerReportModel {
     public let daemonLostText: String
     public let deleted: [String]
     public let failed: [String]
+    public let hasDeletions: Bool
     public private(set) var historyWarning = ""
 
     @ObservationIgnored public private(set) var persistence: Task<Void, Never>?
@@ -30,6 +31,7 @@ public final class DockerReportModel {
     ) {
         self.navigation = navigation
         let report = result.report
+        hasDeletions = report.itemsDeleted > 0
 
         freedText = String(localized: "\(Formatting.bytes(report.bytesFreed)) recuperati", bundle: .module)
         let deletedNoun = Formatting.plural(
