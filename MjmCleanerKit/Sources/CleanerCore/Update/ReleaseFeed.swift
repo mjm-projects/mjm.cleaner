@@ -34,10 +34,10 @@ public protocol ReleaseFeed: Sendable {
     func latestRelease(newerThan current: AppVersion) async throws -> AvailableRelease?
 }
 
-/// `GET /repos/markjackmilian/mjm.cleaner/releases/latest`: GitHub esclude da sé bozze e
+/// `GET /repos/mjm-projects/mjm.cleaner/releases/latest`: GitHub esclude da sé bozze e
 /// prerelease. Senza autenticazione il limite è di 60 richieste all'ora per indirizzo.
 public struct GitHubReleaseFeed: ReleaseFeed {
-    public static let latestAddress = "https://api.github.com/repos/markjackmilian/mjm.cleaner/releases/latest"
+    public static let latestAddress = "https://api.github.com/repos/mjm-projects/mjm.cleaner/releases/latest"
 
     private let http: any HTTPClient
     private let userAgent: String
@@ -92,8 +92,8 @@ public struct GitHubReleaseFeed: ReleaseFeed {
             throw UpdateError.invalidRelease(String(localized: "indirizzo non HTTPS", bundle: .module))
         }
         // Solo gli indirizzi di questa release: stesso repository e stesso tag, come li produce il workflow.
-        let assetPath = "/markjackmilian/mjm.cleaner/releases/download/\(version.tag)/\(expectedName)"
-        let pagePath = "/markjackmilian/mjm.cleaner/releases/tag/\(version.tag)"
+        let assetPath = "/mjm-projects/mjm.cleaner/releases/download/\(version.tag)/\(expectedName)"
+        let pagePath = "/mjm-projects/mjm.cleaner/releases/tag/\(version.tag)"
         guard assetURL.host() == "github.com", assetURL.path(percentEncoded: false) == assetPath,
               pageURL.host() == "github.com", pageURL.path(percentEncoded: false) == pagePath else {
             throw UpdateError.invalidRelease(String(localized: "indirizzo non della release di mjm.cleaner", bundle: .module))

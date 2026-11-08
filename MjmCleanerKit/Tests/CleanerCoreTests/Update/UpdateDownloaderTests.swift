@@ -12,9 +12,9 @@ struct UpdateDownloaderTests {
         let name = AvailableRelease.assetName(for: tag)
         return AvailableRelease(
             version: version,
-            pageURL: try #require(URL(string: "https://github.com/markjackmilian/mjm.cleaner/releases/tag/\(tag)")),
+            pageURL: try #require(URL(string: "https://github.com/mjm-projects/mjm.cleaner/releases/tag/\(tag)")),
             assetName: name,
-            assetURL: try #require(URL(string: "https://github.com/markjackmilian/mjm.cleaner/releases/download/\(tag)/\(name)")),
+            assetURL: try #require(URL(string: "https://github.com/mjm-projects/mjm.cleaner/releases/download/\(tag)/\(name)")),
             size: Int64(payload.count),
             sha256: sha256)
     }
