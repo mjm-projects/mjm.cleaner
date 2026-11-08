@@ -15,7 +15,7 @@ struct UpdateInstallerTests {
         let name = AvailableRelease.assetName(for: "v0.2.0")
         let release = AvailableRelease(
             version: AppVersion(major: 0, minor: 2, patch: 0),
-            pageURL: try #require(URL(string: "https://github.com/markjackmilian/mjm.cleaner/releases/tag/v0.2.0")),
+            pageURL: try #require(URL(string: "https://github.com/mjm-projects/mjm.cleaner/releases/tag/v0.2.0")),
             assetName: name, assetURL: try #require(URL(string: "https://github.com/x/\(name)")),
             size: 1, sha256: String(repeating: "a", count: 64))
         return VerifiedUpdate(release: release, bundlePath: bundle)

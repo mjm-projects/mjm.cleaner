@@ -18,13 +18,13 @@ func releaseJSON(
 ) -> Data {
     let defaultAsset: [String: Any] = [
         "name": "mjm.cleaner-\(tag)-macos-universal.zip",
-        "browser_download_url": "https://github.com/markjackmilian/mjm.cleaner/releases/download/\(tag)/mjm.cleaner-\(tag)-macos-universal.zip",
+        "browser_download_url": "https://github.com/mjm-projects/mjm.cleaner/releases/download/\(tag)/mjm.cleaner-\(tag)-macos-universal.zip",
         "size": 3_188_840,
         "digest": "sha256:" + String(repeating: "ab", count: 32),
     ]
     let object: [String: Any] = [
         "tag_name": tag,
-        "html_url": htmlURL ?? "https://github.com/markjackmilian/mjm.cleaner/releases/tag/\(tag)",
+        "html_url": htmlURL ?? "https://github.com/mjm-projects/mjm.cleaner/releases/tag/\(tag)",
         "assets": assets ?? [defaultAsset],
     ]
     // Gli oggetti sono costruiti qui sopra: la serializzazione non può fallire.
@@ -34,7 +34,7 @@ func releaseJSON(
 func asset(_ name: String, tag: String = "v0.2.0", url: String? = nil, size: Int64 = 10, digest: String? = "sha256:" + String(repeating: "ab", count: 32)) -> [String: Any] {
     var asset: [String: Any] = [
         "name": name,
-        "browser_download_url": url ?? "https://github.com/markjackmilian/mjm.cleaner/releases/download/\(tag)/\(name)",
+        "browser_download_url": url ?? "https://github.com/mjm-projects/mjm.cleaner/releases/download/\(tag)/\(name)",
         "size": size,
     ]
     if let digest { asset["digest"] = digest }
